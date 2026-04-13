@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "name": "Update App Docs",
+  "description": "After spec plans complete or a session ends, reviews changes under src/app/ and suggests updating or creating documentation in app_docs/. Docs are segmented per module/feature (route). Inherits style from .kiro/agents/documenter agent and existing documents.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review any recent changes or new files under src/app/ (portal.consumer) for frontend and simply src/ for backend (cp-services). For each affected module or feature (by route/folder), check if a corresponding doc exists under app_docs/. \n\nNEVER DO FULL AUDIT UNLESS PROMPTED\n\norigin/dev is source of truth\n\nRules:\n1. If app_docs/ doesn't exist yet, suggest creating it and propose an initial doc structure matching the module layout in src/app/.\n2. If a doc exists for the changed module, suggest specific updates to reflect the changes. Keep the existing doc format and style.\n3. If no doc exists for a changed module, suggest creating one following the same format as sibling docs in app_docs/.\n4. If a .kiro/agents/documenter agent exists, inherit its tone, structure, and formatting conventions.\n5. Docs should be segmented per module/feature (one doc per route or major feature folder).\n6. Only suggest doc changes — do not auto-write. Present a summary of what needs updating or creating and ask for confirmation.\n7. Keep docs concise, direct, and developer-focused. No fluff."
+  },
+  "workspaceFolderName": "CP",
+  "shortName": "update-app-docs"
+}

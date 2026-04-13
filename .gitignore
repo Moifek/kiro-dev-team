@@ -1,0 +1,15 @@
+*
+!*/
+
+!.gitignore
+!README.md
+
+# Un-ignore .kiro directories and ALL their contents
+!**/.kiro/
+!**/.kiro/**
+
+# Ignore specs
+.kiro/specs
+
+# Ignore mcp.json to hide creds
+.kiro/settings/mcp.json

@@ -1,0 +1,15 @@
+{
+  "name": "team-lead",
+  "description": "Team orchestrator that creates plans and delegates work to specialized subagents (builder, validator, documenter).",
+  "prompt": "file://./team-lead-prompt.md",
+  "tools": ["read", "subagent", "todo"],
+  "allowedTools": ["read", "subagent", "todo", "mcp_atlassian__jira_get_issue", "mcp_atlassian__jira_search"],
+  "toolsSettings": {
+    "subagent": {
+      "trustedAgents": ["builder", "validator", "documenter"]
+    }
+  },
+  "resources": ["file://specs/**/*.md", "file://README.md", "file://app_docs/**/*.md"],
+  "model": "claude-sonnet-4",
+  "welcomeMessage": "Team Lead ready. Describe what you want to build and I'll orchestrate the team."
+}
