@@ -9,6 +9,7 @@
       "autoAllowReadonly": true
     }
   },
+  "resources": ["file://app_docs/**/*.md"],
   "model": "claude-sonnet-4",
   "welcomeMessage": "Validator ready. What should I verify?"
 }
