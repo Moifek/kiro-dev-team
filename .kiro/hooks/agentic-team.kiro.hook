@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "name": "Agentic Team",
+  "description": "Swap to team-lead agent and begin spec-driven execution. Reads the latest spec or Jira ticket and orchestrates builder, validator, tester, and documenter.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are about to kick off the agentic development workflow.\n\n1. Ask the user what to work on. Accept any of:\n   - A Jira ticket key (e.g. CP-1234)\n   - A spec path (e.g. .kiro/specs/feature-name/)\n   - A plain description of the task\n\n2. Based on input:\n   - If Jira ticket: fetch it with the Atlassian MCP tools, summarize it, and confirm scope with the user.\n   - If spec path: read tasks.md from that spec directory and summarize the tasks.\n   - If plain description: ask the user if they want to create a spec first or go straight to execution.\n\n3. Once scope is confirmed, tell the user to swap to team-lead:\n   `/agent swap` → select `team-lead`\n\n   Then provide the exact prompt to paste for team-lead, e.g.:\n   \"Execute the spec in .kiro/specs/<name>/\" or \"Implement CP-XXXX: <summary>\"\n\n4. If the user is already on team-lead agent, skip step 3 and begin orchestration directly."
+  },
+  "workspaceFolderName": "CP",
+  "shortName": "agentic-team"
+}
