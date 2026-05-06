@@ -1,26 +1,32 @@
 ---
 inclusion: always
+version: 2.1
 ---
 
 # Jira Ticket Template - ServicePower Engineering
 
 Standard structure for creating and updating Jira tickets across WORMS and CP boards.
-All team members and AI agents (Kiro) must follow this template when creating or updating tickets.
 
-## When This Applies
+## Authorship Layers
 
-- Creating new Jira issues via Atlassian MCP tools
-- Updating existing ticket descriptions
-- Reviewing tickets for completeness before moving to Ready
-- AI agents reading tickets to begin implementation
+| Layer | Author | When |
+|-------|--------|------|
+| **Layer 1** (required) | PO / PM / ticket creator | At ticket creation |
+| **Layer 2** (populated later) | Developer or AI agent | During implementation |
+
+Layer 1 defines WHAT and WHY. Layer 2 documents HOW.
 
 ---
 
-## Template by Issue Type
-
-### Story / Feature
+## Story / Feature
 
 ```
+## Story Type
+- [ ] New Feature (greenfield)
+- [ ] Enhancement (modifying existing behavior)
+
+<!-- If Enhancement: Backward Compatibility section is REQUIRED -->
+
 ## Summary
 
 [What is being built, why, and who benefits. One paragraph.]
@@ -48,15 +54,6 @@ All team members and AI agents (Kiro) must follow this template when creating or
 1. WHEN [trigger], THE [system] SHALL [response] (Req N)
 2. IF [condition], THEN THE [system] SHALL [response] (Req N)
 
-## Technical Notes
-
-- **Repos:** `worms-services`, `worms-portal`, `consumer-portal-api`, `consumer-portal-ui`
-- **Files:** `src/path/to/file.ts`
-- **API Contract:** method, endpoint, request/response JSON
-- **Config Changes:** JSON snippet with defaults
-- **Error Messages:** exact message, HTTP code, error class
-- **Data Model:** schema changes, new fields/collections
-
 ## Dependencies
 
 - Blocked by / Blocks / Related: [TICKET-ID]
@@ -64,6 +61,7 @@ All team members and AI agents (Kiro) must follow this template when creating or
 ## Backward Compatibility
 
 [What must NOT break. Tenants, consumers, or integrations that depend on current behavior.]
+<!-- REQUIRED for Enhancement. For New Feature, write "N/A - greenfield" if no existing behavior is affected. -->
 
 ## Definition of Done
 
@@ -80,11 +78,24 @@ All team members and AI agents (Kiro) must follow this template when creating or
 ## Links
 
 [Design, API docs, related tickets, Confluence pages]
+
+---
+<!-- LAYER 2: Populated by developer or AI agent during implementation. Leave blank at ticket creation. -->
+
+## Technical Notes
+
+- **Repos:** [filled during implementation]
+- **Files:** [filled during implementation]
+- **API Contract:** [method, endpoint, request/response JSON]
+- **Config Changes:** [JSON snippet with defaults]
+- **Error Messages:** [exact message, HTTP code, error class]
+- **Data Model:** [schema changes, new fields/collections]
+- **Test Coverage:** [what was tested, how to run]
 ```
 
 ---
 
-### Bug
+## Bug
 
 ```
 ## Summary
@@ -112,18 +123,9 @@ All team members and AI agents (Kiro) must follow this template when creating or
 
 [What happens. Include error messages, HTTP codes, console output.]
 
-## Root Cause
-
-[Code-level explanation with file/function reference, or "TBD".]
-
 ## Impact
 
 [Who is affected, severity, workaround if any.]
-
-## Fix
-
-- **Repos:** [affected repos]
-- **Files:** `src/path/to/file.ts`
 
 ## Acceptance Criteria
 
@@ -144,11 +146,22 @@ All team members and AI agents (Kiro) must follow this template when creating or
 ## Links
 
 [Support ticket, related tickets, screenshots]
+
+---
+<!-- LAYER 2: Populated by developer or AI agent during implementation. -->
+
+## Technical Notes
+
+- **Root Cause:** [code-level explanation with file/function reference]
+- **Repos:** [affected repos]
+- **Files:** [files changed]
+- **Fix Summary:** [what was changed and why]
+- **Test Coverage:** [regression test details]
 ```
 
 ---
 
-### Task (Infrastructure, DevOps, Research, Migration)
+## Task (Infrastructure, DevOps, Research, Migration)
 
 ```
 ## Summary
@@ -167,9 +180,6 @@ All team members and AI agents (Kiro) must follow this template when creating or
 ## Approach
 
 [Step-by-step plan or comparison table for research/spike.]
-
-- **Repos:** [affected repos]
-- **Files:** [file paths]
 
 ## Acceptance Criteria
 
@@ -191,11 +201,21 @@ All team members and AI agents (Kiro) must follow this template when creating or
 ## Links
 
 [Parent epic, related tickets]
+
+---
+<!-- LAYER 2: Populated by developer or AI agent during implementation. -->
+
+## Technical Notes
+
+- **Repos:** [affected repos]
+- **Files:** [file paths]
+- **Commands:** [scripts or CLI commands used]
+- **Rollback Steps:** [exact steps to undo]
 ```
 
 ---
 
-### Epic
+## Epic
 
 ```
 ## Overview
@@ -226,55 +246,17 @@ All team members and AI agents (Kiro) must follow this template when creating or
 
 ---
 
-## AI Agent Instructions (Kiro)
-
-### Before Writing Code
-1. Read the full ticket. Flag missing sections to the user before starting:
-   - Acceptance Criteria (cannot implement without testable criteria)
-   - Files / Components Likely Involved (can investigate, but flag if missing)
-   - Unknowns with unresolved items (do not guess)
-2. Check Dependencies. If a blocker is not Done, flag it.
-3. Read linked tickets and parent epics for context.
-4. If Backward Compatibility section is absent on a Story that modifies existing APIs or UI, ask.
-
-### When Creating Tickets via MCP
-1. Follow the template for the issue type.
-2. Always include: Summary, Scope, AC (EARS format), Files Likely Involved, Definition of Done, Unknowns.
-3. Never leave AC empty. If unclear, write draft AC marked `[DRAFT]`.
-4. If no unknowns, write "None identified."
-5. Use EARS syntax per `~/.kiro/steering/ears-reference.md`.
-
-### When Updating Tickets via MCP
-1. Present proposed changes to the user before writing.
-2. Do not overwrite existing content. Append or modify specific sections.
-3. Post-implementation details go under Technical Notes, not replacing the original description.
-
-### Mapping Ticket Sections to Implementation
-| Ticket Section | Implementation Action |
-|---|---|
-| Files / Components Likely Involved | Read these files first |
-| API Contract | Verify against existing code before implementing |
-| Configuration Changes | Check tenant config DTO and schema |
-| Error Messages | Use exact messages and HTTP codes specified |
-| Acceptance Criteria | Each AC = at least one test case |
-| Definition of Done | Checklist to verify before marking complete |
-| Unknowns | Do not proceed past an unknown without asking |
-| Out of Scope | Do not implement anything listed here |
-| Backward Compatibility | Write tests that verify old behavior is preserved |
-
----
-
-## Quality Checklist (for ticket authors and reviewers)
+## Quality Checklist (Layer 1 - for ticket authors)
 
 Before moving a ticket to Ready:
 
 - [ ] Summary is one clear sentence (bugs) or paragraph (stories)
+- [ ] Story Type is indicated (New Feature / Enhancement)
 - [ ] Acceptance criteria use EARS syntax with SHALL
 - [ ] Each AC is independently testable with a clear pass/fail
-- [ ] Files or components likely involved are listed
 - [ ] Unknowns section exists (even if "None identified")
 - [ ] Out of Scope is stated (prevents scope creep)
-- [ ] For Stories: Backward Compatibility section present
+- [ ] For Enhancement stories: Backward Compatibility section filled
 - [ ] For Bugs: Steps to Reproduce are numbered and reproducible
 - [ ] For Bugs: Environment details filled in
 - [ ] Links to related tickets, designs, or docs are included
