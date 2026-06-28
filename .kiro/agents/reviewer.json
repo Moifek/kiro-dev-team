@@ -1,0 +1,14 @@
+{
+  "name": "reviewer",
+  "description": "Code review agent that analyzes changes against dev, validates style guide compliance, and reports findings.",
+  "prompt": "file://./reviewer-prompt.md",
+  "tools": ["read", "shell"],
+  "allowedTools": ["read", "shell"],
+  "toolsSettings": {
+    "shell": {
+      "autoAllowReadonly": true
+    }
+  },
+  "model": "claude-sonnet-4.6",
+  "welcomeMessage": "Reviewer ready. What should I review?"
+}

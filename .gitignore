@@ -1,0 +1,20 @@
+*
+!*/
+Automation/
+app_docs/
+
+!.gitignore
+!README.md
+!LICENSE
+# Un-ignore .kiro directories and ALL their contents
+!**/.kiro/
+!**/.kiro/**
+
+# Ignore specs
+.kiro/specs
+.kiro/settings/git-convention.json
+.kiro/docs
+.kiro/steering_planning
+
+# Ignore mcp.json to hide creds
+.kiro/settings/mcp.json

@@ -1,0 +1,29 @@
+{
+  "name": "team-lead",
+  "description": "Team orchestrator that delegates work to builder, validator, reviewer, and documenter subagents.",
+  "prompt": "file://./team-lead-prompt.md",
+  "tools": ["read", "subagent", "todo"],
+  "allowedTools": ["read", "subagent", "todo", "mcp_atlassian__jira_get_issue", "mcp_atlassian__jira_search", "mcp_gitlab__list_merge_requests", "mcp_gitlab__create_merge_request", "mcp_gitlab__get_merge_request", "mcp_gitlab__create_merge_request_note"],
+  "toolsSettings": {
+    "subagent": {
+      "trustedAgents": ["builder", "validator", "reviewer", "documenter", "kiro_default"]
+    }
+  },
+  "resources": ["file://README.md"],
+  "model": "claude-opus-4.8",
+  "mcpServers": {
+    "mcp-atlassian-User": {
+      "url": "https://mcp.atlassian.com/v1/mcp",
+      "headers": {
+        "x-atlassian-cloud-id": "https://your-org.atlassian.net"
+      },
+      "autoApprove": ["jira_get_issue", "jira_search"]
+    },
+    "gitlab": {
+      "command": "npx",
+      "args": ["-y", "@zereight/mcp-gitlab", "--token=", "--api-url=https://gitlab.com/api/v4"],
+      "autoApprove": ["list_merge_requests", "create_merge_request", "get_merge_request", "create_merge_request_note"]
+    }
+  },
+  "welcomeMessage": "Team Lead ready. Describe what you want to build and I'll orchestrate the team."
+}

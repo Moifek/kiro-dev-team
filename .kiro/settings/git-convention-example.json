@@ -1,0 +1,7 @@
+{
+  "workspace": "your-org",
+  "repos": ["service-a", "service-b"],
+  "defaultBase": "dev",
+  "prTitleFormat": "[PROJ-{ticket}] {summary}",
+  "branchFormat": "{type}/PROJ-{ticket}-{slug}"
+}

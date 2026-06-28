@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Log Session",
+  "description": "Logs completed agent sessions to SQLite with outcome, ticket, and compliance data.",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Log this session to the SQLite database by running ~/.kiro/scripts/log-session.sh.\n\nExtract from the conversation:\n- session_id: Use format YYYY-MM-DD-<short-slug> (e.g. 2026-05-20-captcha-validation)\n- agent: Which agent ran (default, team-lead, builder, etc.)\n- project: The repo or project worked on (e.g. service-a, service-b, App One Portal)\n- ticket: Jira ticket if any (e.g. PROJ-1001), or empty string\n- outcome: One of success, partial, failed, abandoned\n- summary: One sentence describing what was accomplished\n- compliance_json (optional): If the agentic-team workflow ran, a JSON object of steps completed, e.g. {\"branch_setup\":1,\"validation\":1,\"code_review\":1,\"sync_specs\":0,\"push\":1,\"pr\":1}\n\nRun:\n```\nbash ~/.kiro/scripts/log-session.sh \"<session_id>\" \"<agent>\" \"<project>\" \"<ticket>\" \"<outcome>\" \"<summary>\" '<compliance_json>'\n```\n\nIf the session was trivial (just a question, no real task), skip logging and do nothing."
+  },
+  "shortName": "log-session"
+}
